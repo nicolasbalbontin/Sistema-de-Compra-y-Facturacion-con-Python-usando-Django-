@@ -1,0 +1,9 @@
+#Framework Django
+Django
+django-environ
+django-geo-chile
+#libreria para la conexión con la PostgreSQL
+psycopg2-binary
+requests>=2.25.1
+xhtml2pdf
+openpyxl

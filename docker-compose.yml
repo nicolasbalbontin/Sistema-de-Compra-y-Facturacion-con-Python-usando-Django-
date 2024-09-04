@@ -1,0 +1,68 @@
+services:
+  db-compras-system:
+    image: postgres:latest
+    container_name: db-compras-system
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: always
+    expose:
+      - "5432"
+    ports:
+      - "5432:5432"
+    networks:
+      - net
+
+  app-compras-system:
+    build: .
+    container_name: tdsynnex_app
+    command: python3 manage.py runserver 0.0.0.0:8000
+    env_file:
+      - .env
+    environment:
+      POSTGRES_HOST: db-compras-system
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    restart: always
+    expose:
+      - "8000"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src:/code
+    depends_on:
+      - db-compras-system
+    networks:
+      - net
+
+  generate:
+    build: .
+    command: bash -c 'mkdir -p src && django-admin startproject app src'
+    env_file:
+      - .env
+    volumes:
+      - .:/code
+    depends_on:
+      - tdsynnex_db
+    networks:
+      - net
+
+  manage:
+    build: .
+    entrypoint: bash -c 'while true; do sleep 30; done;'
+    env_file:
+      - .env
+    volumes:
+      - ./src:/code
+    depends_on:
+      - tdsynnex_db
+    networks:
+      - net
+
+networks:
+  net:
