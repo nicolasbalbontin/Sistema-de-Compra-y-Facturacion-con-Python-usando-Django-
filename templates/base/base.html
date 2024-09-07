@@ -10,7 +10,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Sistema de Compras e Inventario por DEBS Consultores</title>
+  <title>{% block title %}Sistema de Compras e Inventario por DEBS Consultores{% endblock title%}</title>
 
   <!-- Custom fonts for this template-->
   <link href="{% static 'base/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
@@ -21,8 +21,8 @@
 
 </head>
 
-<body id="page-top">
-
+<body id="page-top" class="bg-gradient-primary">
+{% block side_bar %}
   <!-- Page Wrapper -->
   <div id="wrapper">
 
@@ -104,7 +104,7 @@
         <div id="collapsePages" class="collapse show" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
+            <a class="collapse-item" href="{% url 'bases:login'%}">Login</a>
             <a class="collapse-item" href="register.html">Register</a>
             <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
             <div class="collapse-divider"></div>
@@ -138,6 +138,7 @@
       </div>
 
     </ul>
+    {% endblock side_bar %}
     <!-- End of Sidebar -->
 
     <!-- Content Wrapper -->
@@ -147,6 +148,7 @@
       <div id="content">
 
         <!-- Topbar -->
+         {% block top_bar %}
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
           <!-- Sidebar Toggle (Topbar) -->
@@ -300,7 +302,7 @@
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                <img class="img-profile rounded-circle" src="https://images.unsplash.com/photo-1667053508464-eb11b394df83?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -317,7 +319,7 @@
                   Activity Log
                 </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                <a class="dropdown-item" href="{% url 'bases:logout' %}" data-toggle="modal" data-target="#logoutModal">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -327,9 +329,11 @@
           </ul>
 
         </nav>
+        {% endblock top_bar %}
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
+         {% block page_content %}
         <div class="container-fluid">
 
           <!-- Page Heading -->
@@ -339,9 +343,11 @@
         <!-- /.container-fluid -->
 
       </div>
+      {% endblock page_content %}
       <!-- End of Main Content -->
 
       <!-- Footer -->
+       {% block footer %}
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
@@ -349,14 +355,16 @@
           </div>
         </div>
       </footer>
+      
       <!-- End of Footer -->
 
     </div>
+    
     <!-- End of Content Wrapper -->
-
   </div>
+  {% endblock footer %}
   <!-- End of Page Wrapper -->
-
+{% block login %}{% endblock login %}
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -375,7 +383,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
+          <a class="btn btn-primary" href="{% url 'bases:logout' %}">Salir</a>
         </div>
       </div>
     </div>
@@ -390,7 +398,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{% static 'js/sb-admin-2.min.js'%}"></script>
-
+{% block js_page %}{% endblock js_page %}
 </body>
 
 </html>
